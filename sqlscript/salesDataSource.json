@@ -2,6 +2,9 @@
 	"name": "salesDataSource",
 	"properties": {
 		"description": "Creating external data source for sales",
+		"folder": {
+			"name": "Datasource"
+		},
 		"content": {
 			"query": "CREATE EXTERNAL DATA SOURCE sales\nWITH(\n    LOCATION = 'https://adls1016.dfs.core.windows.net/adls/'\n    \n)",
 			"metadata": {

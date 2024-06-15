@@ -1,0 +1,20 @@
+{
+	"name": "Externaltable",
+	"properties": {
+		"folder": {
+			"name": "Datasource"
+		},
+		"content": {
+			"query": "IF EXISTS (SELECT * FROM sys.external_tables WHERE name = 'Sales')\nBEGIN\n    DROP EXTERNAL TABLE [dbo].[Sales];\nEND\nGO\n\nCREATE EXTERNAL TABLE Sales\nWITH(\n    LOCATION = 'christy/',\n    DATA_SOURCE = sales,\n    FILE_FORMAT = ParquetFormat\n)\nAS\nSELECT * FROM \nOPENROWSET(\n    BULK 'sales/sales.csv',\n    DATA_SOURCE = 'sales',\n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE\n)AS source_date\nWHERE EmailAddress = 'christy12@adventure-works.com'\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "practice",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
