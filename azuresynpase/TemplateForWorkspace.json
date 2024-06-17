@@ -24,6 +24,10 @@
 		"synapse01-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adls1016.dfs.core.windows.net"
+		},
+		"Trigger 1_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016"
 		}
 	},
 	"variables": {
@@ -424,8 +428,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> movieSource",
 						"movieSource filter(toInteger(year) >= 1910 &&  toInteger(year) <= 2000\r",
-						"&& rlike(genres,'Comedy')\r",
-						") ~> FilterYears",
+						"&& rlike(genres,'Comedy')) ~> FilterYears",
 						"FilterYears aggregate(groupBy(year),",
 						"     AverageComedyRating = round(avg(toInteger(Rating)),2)) ~> AggregateComedyRatings",
 						"AggregateComedyRatings sink(allowSchemaDrift: true,",
@@ -458,6 +461,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": "moviesDB.csv",
+						"folderPath": "Movies",
 						"fileSystem": "adls"
 					},
 					"columnDelimiter": ",",
@@ -522,6 +526,36 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/azuresynpase-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Trigger 1')]",
+			"type": "Microsoft.Synapse/workspaces/triggers",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "movies",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/adls/blobs/",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('Trigger 1_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/movies')]"
 			]
 		}
 	]
