@@ -195,7 +195,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": "moviesDB.csv",
-						"folderPath": "Movies",
+						"folderPath": "Movies/source",
 						"fileSystem": "adls"
 					},
 					"columnDelimiter": ",",
@@ -326,7 +326,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
