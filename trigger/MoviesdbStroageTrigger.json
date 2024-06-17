@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "This trigger based on storage event when movies files land in blob this pipeline gets exectued.",
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
