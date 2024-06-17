@@ -25,10 +25,6 @@
 			"type": "string",
 			"defaultValue": "https://adls1016.dfs.core.windows.net"
 		},
-		"Trigger 1_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016"
-		},
 		"MoviesdbStroageTrigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016"
@@ -326,25 +322,36 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/Trigger 1')]",
+			"name": "[concat(parameters('workspaceName'), '/MoviesdbStroageTrigger')]",
 			"type": "Microsoft.Synapse/workspaces/triggers",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"description": "This trigger based on storage event when movies files land in blob this pipeline gets exectued.",
 				"annotations": [],
 				"runtimeState": "Stopped",
-				"pipelines": [],
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "movies",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/adls/blobs/Movies/moviesDB.csv",
+					"blobPathBeginsWith": "/moviesontainer/blobs/movieSource/",
 					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('Trigger 1_properties_typeProperties_scope')]",
+					"scope": "[parameters('MoviesdbStroageTrigger_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/pipelines/movies')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
@@ -552,38 +559,6 @@
 				"type": "SqlQuery"
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/MoviesdbStroageTrigger')]",
-			"type": "Microsoft.Synapse/workspaces/triggers",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"description": "This trigger based on storage event when movies files land in blob this pipeline gets exectued.",
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "movies",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/moviesontainer/blobs/movieSource/",
-					"blobPathEndsWith": "moviesDB.csv",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('MoviesdbStroageTrigger_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/pipelines/movies')]"
-			]
 		}
 	]
 }
