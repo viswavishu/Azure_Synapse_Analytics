@@ -15,7 +15,7 @@
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/moviesontainer/blobs/movieSource/",
-			"blobPathEndsWith": "moviesDB.csv",
+			"blobPathEndsWith": ".csv",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016",
 			"events": [
