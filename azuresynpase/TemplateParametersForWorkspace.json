@@ -19,6 +19,9 @@
 		},
 		"Trigger 1_properties_typeProperties_scope": {
 			"value": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016"
+		},
+		"MoviesdbStroageTrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016"
 		}
 	}
 }
