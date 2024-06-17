@@ -1,0 +1,24 @@
+{
+	"name": "Trigger 1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "movies",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adls/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/6852d822-6c9f-4d2b-8325-639e18c4707e/resourceGroups/learning/providers/Microsoft.Storage/storageAccounts/adls1016",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
