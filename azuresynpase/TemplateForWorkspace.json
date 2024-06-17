@@ -546,7 +546,8 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/adls/blobs/",
+					"blobPathBeginsWith": "/adls/blobs/Movies/moviesDB.csv",
+					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('Trigger 1_properties_typeProperties_scope')]",
 					"events": [
